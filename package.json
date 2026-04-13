@@ -2,10 +2,12 @@
   "name": "dd-into-3d-server",
   "version": "1.0.0",
   "description": "Backend for DD Into 3D — 3D printed products store",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "make-admin": "tsx scripts/makeAdmin.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,6 +19,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.2"
   }
 }

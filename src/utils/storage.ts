@@ -6,7 +6,7 @@ export async function uploadFile(
     destination: string,
     contentType: string,
 ): Promise<string> {
-    const bucket = storage.bucket();
+    const bucket = storage.bucket('dd-into-3d.firebasestorage.app');
     const file = bucket.file(destination);
     await file.save(buffer, { metadata: { contentType } });
     await file.makePublic();

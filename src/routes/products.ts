@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import multer from "multer";
 import { admin, db } from "../config/firebase";
 import adminAuthMiddleware from "../middleware/adminAuth";
-import { sanitizeFilename, uploadFile } from "../utils/storage";
+import { deleteFilesByPublicUrls, sanitizeFilename, uploadFile } from "../utils/storage";
 
 const router = express.Router();
 
@@ -140,6 +140,13 @@ router.delete("/:id", adminAuthMiddleware, async (req: Request, res: Response) =
         const ref = db.collection("products").doc(productId);
         const doc = await ref.get();
         if (!doc.exists) return res.status(404).json({ error: "Product not found" });
+
+        const product = doc.data() as { images?: unknown };
+        const imageUrls = Array.isArray(product.images)
+            ? product.images.filter((img): img is string => typeof img === "string")
+            : [];
+
+        await deleteFilesByPublicUrls(imageUrls);
 
         await ref.delete();
         return res.json({ message: "Product deleted" });

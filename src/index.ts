@@ -1,7 +1,7 @@
-import path from "path";
 import cors from "cors";
-import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
+
+import "./env";
 
 import adminCustomPrintRoutes from "./routes/admin/customPrints";
 import adminGptRoutes from "./routes/admin/gpt";
@@ -11,10 +11,6 @@ import customPrintRoutes from "./routes/customPrints";
 import orderRoutes from "./routes/orders";
 import productRoutes from "./routes/products";
 import reviewRoutes from "./routes/reviews";
-
-dotenv.config({
-    path: path.resolve(__dirname, "../.env"),
-});
 
 const app = express();
 const PORT = process.env.PORT || 4000;

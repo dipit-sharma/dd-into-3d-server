@@ -4,9 +4,15 @@ import adminAuthMiddleware from "../../middleware/adminAuth";
 
 const router = express.Router();
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient(): OpenAI {
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+        throw new Error("OPENAI_API_KEY is not configured");
+    }
+
+    return new OpenAI({ apiKey });
+}
 
 const PRODUCT_CATEGORIES = ["Home Decor", "Desktop Figurines", "Customisable"] as const;
 
@@ -43,6 +49,8 @@ router.get("/product-details", adminAuthMiddleware, async (req: Request, res: Re
         if (!process.env.OPENAI_API_KEY) {
             return res.status(500).json({ error: "OPENAI_API_KEY is not configured" });
         }
+
+        const openai = getOpenAIClient();
 
         const imageUrl = String(req.query.imageUrl ?? "").trim();
         const productName = String(req.query.name ?? req.query.productName ?? "").trim();

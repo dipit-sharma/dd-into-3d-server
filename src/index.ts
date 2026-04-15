@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 
 import adminCustomPrintRoutes from "./routes/admin/customPrints";
+import adminGptRoutes from "./routes/admin/gpt";
 import adminOrderRoutes from "./routes/admin/orders";
 import authRoutes from "./routes/auth";
 import customPrintRoutes from "./routes/customPrints";
@@ -36,6 +37,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/custom-prints", customPrintRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/custom-prints", adminCustomPrintRoutes);
+app.use("/api/admin", adminGptRoutes);
 
 app.use((_req: Request, res: Response) => {
     res.status(404).json({ error: "Route not found" });

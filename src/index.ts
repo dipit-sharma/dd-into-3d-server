@@ -9,6 +9,7 @@ import adminOrderRoutes from "./routes/admin/orders";
 import authRoutes from "./routes/auth";
 import customPrintRoutes from "./routes/customPrints";
 import orderRoutes from "./routes/orders";
+import paymentRoutes from "./routes/payments";
 import productRoutes from "./routes/products";
 import reviewRoutes from "./routes/reviews";
 
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/products/:productId/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/custom-prints", customPrintRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/custom-prints", adminCustomPrintRoutes);

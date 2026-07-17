@@ -7,6 +7,7 @@ import adminCustomPrintRoutes from "./routes/admin/customPrints";
 import adminGptRoutes from "./routes/admin/gpt";
 import adminOrderRoutes from "./routes/admin/orders";
 import authRoutes from "./routes/auth";
+import categoryRoutes from "./routes/categories";
 import customPrintRoutes from "./routes/customPrints";
 import orderRoutes from "./routes/orders";
 import paymentRoutes from "./routes/payments";
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/health", (_req: Request, res: Response) => res.json({ status: "ok" }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/products/:productId/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);

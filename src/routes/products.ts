@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import multer from "multer";
 import { admin, db } from "../config/firebase";
 import adminAuthMiddleware from "../middleware/adminAuth";
-import { deleteFilesByPublicUrls, sanitizeFilename, uploadFile } from "../utils/storage";
+import { deleteFileByPublicUrl, deleteFilesByPublicUrls, sanitizeFilename, uploadFile } from "../utils/storage";
 
 const router = express.Router();
 
@@ -12,6 +12,16 @@ const upload = multer({
 });
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const SERVER_CATEGORIES = ["Figurines", "Home Decor", "Gadgets", "Art", "Functional"] as const;
+
+router.get("/categories", async (_req: Request, res: Response) => {
+    try {
+        return res.json({ categories: [...SERVER_CATEGORIES] });
+    } catch (err) {
+        console.error("GET /products/categories error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 router.get("/", async (req: Request, res: Response) => {
     try {
@@ -155,6 +165,39 @@ router.delete("/:id", adminAuthMiddleware, async (req: Request, res: Response) =
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+
+router.delete(
+    "/:id/images",
+    adminAuthMiddleware,
+    async (req: Request, res: Response) => {
+        try {
+            const productId = String(req.params.id);
+            const { imageUrl } = req.body as { imageUrl?: string };
+
+            if (!imageUrl) {
+                return res.status(400).json({ error: "imageUrl is required" });
+            }
+
+            const ref = db.collection("products").doc(productId);
+            const doc = await ref.get();
+            if (!doc.exists) return res.status(404).json({ error: "Product not found" });
+
+            const product = doc.data() as { images?: unknown };
+            const currentImages = Array.isArray(product.images)
+                ? product.images.filter((img): img is string => typeof img === "string")
+                : [];
+            const nextImages = currentImages.filter((img) => img !== imageUrl);
+
+            await deleteFileByPublicUrl(imageUrl);
+            await ref.update({ images: nextImages });
+
+            return res.json({ images: nextImages });
+        } catch (err) {
+            console.error("DELETE /products/:id/images error:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+    },
+);
 
 router.post(
     "/:id/images",

@@ -10,9 +10,31 @@ const CATEGORIES: CategoryGridItem[] = [
         rowSpan: 1,
         colSpan: 3,
         slides: [{
-            image: "https://firebasestorage.googleapis.com/v0/b/dd-into-3d.firebasestorage.app/o/assets%2F1784271622432_Gemini_Generated_Image_8eli1h8eli1h8eli.webp?alt=media&token=7b0bcd02-8318-47f3-a4bb-38929445f85c",
+            image: "https://firebasestorage.googleapis.com/v0/b/dd-into-3d.firebasestorage.app/o/assets%2Fnameplatehero.PNG?alt=media&token=bca622aa-7738-451b-bede-ae0a4bbf3716",
             link: "/products/ifMTONdeuNuQQVzI33Ci",
             alt: "Customized Name Plates"
+        }]
+    },
+    {
+        id: "name_keychain",
+        title: "Name Keychains",
+        rowSpan: 1,
+        colSpan: 1,
+        slides: [{
+            image: "https://firebasestorage.googleapis.com/v0/b/dd-into-3d.firebasestorage.app/o/assets%2FGemini_Generated_Image_1xqtv71xqtv71xqt.png?alt=media&token=fe4cee92-9084-4635-b92b-c98b222cf5d7",
+            link: "",
+            alt: "Customized Name Keychains"
+        }]
+    },
+    {
+        id: "name_keychain",
+        title: "Name Keychains",
+        rowSpan: 1,
+        colSpan: 1,
+        slides: [{
+            image: "https://firebasestorage.googleapis.com/v0/b/dd-into-3d.firebasestorage.app/o/assets%2FGemini_Generated_Image_1xqtv71xqtv71xqt.png?alt=media&token=fe4cee92-9084-4635-b92b-c98b222cf5d7",
+            link: "",
+            alt: "Customized Name Keychains"
         }]
     }
 ] as const;

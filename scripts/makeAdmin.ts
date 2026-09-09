@@ -1,9 +1,7 @@
-import path from "path";
 import dotenv from "dotenv";
 import admin from "firebase-admin";
-import serviceAccountJson from "../src/config/firebase.json";
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config();
 
 const uid = process.argv[2];
 if (!uid) {
@@ -11,11 +9,9 @@ if (!uid) {
     process.exit(1);
 }
 
-const serviceAccount = serviceAccountJson as admin.ServiceAccount;
-
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+        credential: admin.credential.applicationDefault(),
     });
 }
 

@@ -32,4 +32,3 @@ admin
         console.error("Failed to set admin claim:", message);
         process.exit(1);
     });
-// for personal use

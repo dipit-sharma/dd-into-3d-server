@@ -17,7 +17,7 @@ import reviewRoutes from "./routes/reviews";
 const app = express();
 const PORT = Number(process.env.PORT || 4000);
 
-const allowedOrigins = (process.env.CLIENT_URLSL || "http://localhost:3000")
+const allowedOrigins = (process.env.CLIENT_URLS || "http://localhost:3000")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
